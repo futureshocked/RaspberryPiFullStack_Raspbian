@@ -46,6 +46,8 @@ import time
 import datetime
 import sys
 import Adafruit_DHT
+import datetime
+import sqlite3
 
 app = Flask(__name__)
 app.debug = True # Make this False if you are no longer debugging
@@ -64,7 +66,6 @@ def lab_temp():
 
 @app.route("/lab_env_db", methods=['GET']) 
 def lab_env_db():
-	import datetime
 	from_date_str 	= request.args.get('from',time.strftime("%Y-%m-%d 00:00")) #Get the from date value from the URL
 	to_date_str 	= request.args.get('to',time.strftime("%Y-%m-%d %H:%M"))   #Get the to date value from the URL
 
@@ -73,7 +74,6 @@ def lab_env_db():
 	if not validate_date(to_date_str):
 		to_date_str 	= time.strftime("%Y-%m-%d %H:%M")		# Validate date before sending it to the DB
 		
-	import sqlite3
 	conn=sqlite3.connect('/var/www/lab_app/lab_app.db')
 	curs=conn.cursor()
 	curs.execute("SELECT * FROM temperatures WHERE rDateTime BETWEEN ? AND ?", (from_date_str, to_date_str))

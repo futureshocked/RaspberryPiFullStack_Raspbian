@@ -44,6 +44,7 @@ A second page that displays historical environment data from the SQLite3 databas
 from flask import Flask, request, render_template
 import sys
 import Adafruit_DHT
+import sqlite3
 
 app = Flask(__name__)
 app.debug = True # Make this False if you are no longer debugging
@@ -62,7 +63,6 @@ def lab_temp():
 
 @app.route("/lab_env_db")
 def lab_env_db():
-	import sqlite3
 	conn=sqlite3.connect('/var/www/lab_app/lab_app.db')
 	curs=conn.cursor()
 	curs.execute("SELECT * FROM temperatures")
