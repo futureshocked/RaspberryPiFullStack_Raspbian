@@ -1,0 +1,64 @@
+<html>
+  <meta charset="utf-8">
+  <title>Lab Conditions by RPi</title>
+  <meta http-equiv="refresh" content="10">
+  <meta name="description" content="Lab conditions - RPi">
+  <meta name="author" content="Peter Dalmaris">
+  <!-- Mobile Specific Metas
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- FONT
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+  <!-- CSS
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="stylesheet" href="/static/css/normalize.css">
+  <link rel="stylesheet" href="/static/css/skeleton.css">
+  <!-- Favicon
+  –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+  <link rel="icon" type="image/png" href="/static/images/favicon.png">
+</head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="two-third column" style="margin-top: 5%">
+            <h2>Real time lab conditions</h2>
+            <h1>Temperature: {{"{0:0.1f}".format(temp) }}°C</h1>
+            <h1>Humidity: {{"{0:0.1f}".format(hum)}}%</h1>  
+            <p>This page refreshes every 10 seconds</p>
+        </div>   
+      </div>
+      <div class="row">
+      <div class="eleven columns">
+        <form id="range_select" action = "/lab_env_db" method="GET">  
+          <input type="hidden" class="timezone" name="timezone" />      
+          <div class="one column">
+            <input type="radio" name="range_h" value="3" id="radio_3" /><label for="radio_3">3hrs</label>
+          </div>
+          <div class="one column">
+            <input type="radio" name="range_h" value="6" id="radio_6" /><label for="radio_6">6hrs</label>
+          </div>
+          <div class="one column">
+            <input type="radio" name="range_h" value="12" id="radio_12" /><label for="radio_12">12hrs</label>
+          </div>
+          <div class="one column">
+            <input type="radio" name="range_h" value="24" id="radio_24" /><label for="radio_24">24hrs</label>
+          </div>
+        </form>          
+      </div>
+    </div>           
+  </body> 
+<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jstimezonedetect/1.0.4/jstz.min.js" ></script>
+<script>
+jQuery( document ).ready(function() {
+    timezone = jstz.determine();
+    jQuery("#timezone").text(timezone.name());     
+});
+  jQuery("#range_select input[type=radio]").click(function(){
+    timezone = jstz.determine();
+    jQuery(".timezone").val(timezone.name()); 
+    jQuery("#range_select").submit();
+  });
+</script> 
+</html>

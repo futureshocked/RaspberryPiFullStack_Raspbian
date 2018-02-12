@@ -1,0 +1,35 @@
+Example SQLite3 session
+
+#Start sqlite3 and create or open a database file
+>sqlite3 lab_app.db
+sqlite> .help
+
+#Create a new table
+sqlite> begin;
+sqlite> create table temperatures (rDatetime datetime, sensorID text, temp numeric);
+sqlite> insert into temperatures values (datetime(CURRENT_TIMESTAMP),"1",25);
+sqlite> insert into temperatures values (datetime(CURRENT_TIMESTAMP),"1",25.10);
+sqlite> commit;
+
+#Retrieve records
+sqlite> select * from temperatures;
+2015-04-07 04:47:00|1|25
+2015-04-07 04:47:25|1|25.1
+
+#Create another table
+sqlite> begin;
+sqlite> create table humidities (rDatetime datetime, sensorID text, hum numeric);
+sqlite> insert into humidities values (datetime(CURRENT_TIMESTAMP),"1",51);
+sqlite> insert into humidities values (datetime(CURRENT_TIMESTAMP),"1",51.10);
+sqlite> commit;
+
+#List existing tables
+sqlite> .tables
+humidities    temperatures
+
+#Show the schema of one of the tables
+sqlite> .schema temperatures
+CREATE TABLE temperatures (rDatetime datetime, sensorID text, temp numeric);
+
+#Exit sqlite3
+sqlite> .exit

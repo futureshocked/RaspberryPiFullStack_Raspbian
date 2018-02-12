@@ -1,0 +1,3 @@
+# This schedule will execute the env_log.py script every 20 minutes using the 
+# Python interpreter from the application's virtual environment
+*/20 * * * * /var/www/lab_app/venv/bin/python /var/www/lab_app/env_log.py >/dev/null 2>&1

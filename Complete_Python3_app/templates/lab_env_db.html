@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Basic Page Needs
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta charset="utf-8">
+    <title>Lab Conditions by RPi</title>
+    <meta name="description" content="Lab conditions - RPi">
+    <meta name="author" content="Peter Dalmaris">
+    <!-- Mobile Specific Metas
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- FONT
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link href="//fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+    <!-- CSS
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="stylesheet" href="/static/css/normalize.css">
+    <link rel="stylesheet" href="/static/css/skeleton.css">
+    <!-- Favicon
+    –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="icon" type="image/png" href="/static/images/favicon.png">
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+	      <form id="datetime_range" action="/lab_env_db" method="GET"> 
+	        <!-- <div class="row">          -->
+	          <div class="three columns">
+	            <label for="from">From date</label>
+	            <input class="u-full-width" id="datetimepicker1" type="text" value="{{from_date}}" name="from">
+	          </div>
+	        <!-- </div> -->
+	        <!-- <div class="row"> -->
+	          <div class="three columns">
+	            <label for="to">To date</label>           
+	            <input class="u-full-width" id="datetimepicker2" type="text" value="{{to_date}}" name="to">
+	          </div>   
+	        <!-- </div>          -->
+	        <!-- <div class="row"> -->
+	          <div class="two columns">    
+	            <input type="hidden" class="timezone" name="timezone" />       
+	            <input class="button-primary" type="submit" value="Submit" style="position:relative; top: 28px" id="submit_button" />
+	          </div>
+	        <!-- </div> -->
+	      </form> 
+      </div>
+      <div class="row">
+      <div class="eleven columns">
+      	<div class="one column">
+      		<div class="one column">
+			      <a href="" id="plotly" style="position:relative;top:15px">Plotly</a>
+			</div>
+          <a href="/lab_temp" style="position:relative;top:15px">Current</a>
+       	</div>
+        <form id="range_select" action = "/lab_env_db" method="GET">  
+          <input type="hidden" class="timezone" name="timezone" />      
+          <div class="one column">
+            <input type="radio" name="range_h" value="3" id="radio_3" /><label for="radio_3">3hrs</label>
+          </div>
+          <div class="one column">
+            <input type="radio" name="range_h" value="6" id="radio_6" /><label for="radio_6">6hrs</label>
+          </div>
+          <div class="one column">
+            <input type="radio" name="range_h" value="12" id="radio_12" /><label for="radio_12">12hrs</label>
+          </div>
+          <div class="one column">
+            <input type="radio" name="range_h" value="24" id="radio_24" /><label for="radio_24">24hrs</label>
+          </div>
+        </form>          
+      </div>
+    </div>
+    <div class="row">
+     <a href="" id="plotly_url" target="_blank"></a><span id="plotly_wait"></span>
+	</div>
+      <div class="row">
+        <div class="one-third column" style="margin-top: 5%">
+          <strong>Showing all records</strong>
+          <h2>Temperatures</h2>
+            <table class="u-full-width">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>&deg;C</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for row in temp %}
+                <tr>
+                  <td>{{row[0]}}</td>
+                  <td>{{'%0.2f'|format(row[1])}}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            <h2>Humidities</h2>
+            <table class="u-full-width">
+              <thead>
+                <tr>
+                  <th>Date</th>
+                  <th>%</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for row in hum %}
+                <tr>
+                  <td>{{row[0]}}</td>
+                  <td>{{'%0.2f'|format(row[1])}}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+        </div>
+ 
+        <div class="two-thirds column" style="margin-top: 5%">
+        <div class="row">                  
+          <div class="row">
+            <div class="three columns">
+                <div id="chart_temps"></div>
+                <div id="chart_humid"></div>
+            </div>
+          </div>
+        </div>     
+      </div>
+    </div>
+  </body>
+  <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+  <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="/static/css/jquery.datetimepicker.css"/ >
+  <script src="/static/javascript/jquery.datetimepicker.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jstimezonedetect/1.0.4/jstz.min.js" ></script>
+ 
+ 
+  <script>
+    jQuery( "#datetime_range" ).submit(function( event ) {
+        timezone = jstz.determine();
+        jQuery(".timezone").val(timezone.name());      
+    });
+
+    jQuery('#datetimepicker1').datetimepicker(
+      {
+        format:'Y-m-d H:i',
+        defaultDate:'{{from_date}}'
+      });
+    jQuery('#datetimepicker2').datetimepicker({
+        format:'Y-m-d H:i',
+        defaultDate:'{{to_date}}'
+      });
+
+    jQuery("#range_select input[type=radio]").click(function(){
+        timezone = jstz.determine();
+        jQuery(".timezone").val(timezone.name()); 
+        jQuery("#range_select").submit();
+      });
+
+    jQuery("#plotly").click(function(){
+      jQuery("#plotly_wait").text("Sending data...");
+      jQuery("#plotly_url").text("");
+      {% autoescape false %}
+      jQuery.get("/to_plotly?{{query_string}}")
+      {% endautoescape %}
+        .done(function( data ) {
+          jQuery("#plotly_url").attr("href",data);
+          jQuery("#plotly_url").text("Click to see your plot");
+          jQuery("#plotly_wait").text("");            
+	  });
+	      return false; //This is so that the click on the link does not cause the page to refresh
+	});
+    </script>
+ 
+  <script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1','packages':['corechart']}]}"></script>
+ 
+      <script>
+       google.load('visualization', '1', {packages: ['corechart']});
+    google.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+
+      var data = new google.visualization.DataTable();
+      data.addColumn('datetime', 'Time');  
+      data.addColumn('number', 'Temperature');      
+      data.addRows([
+          {% for row in temp %}
+            [new Date({{row[0][0:4]}},{{row[0][5:7]}}-1,{{row[0][8:10]}},{{row[0][11:13]}},{{row[0][14:16]}}),{{'%0.2f'|format(row[1])}}],
+          {% endfor %}
+        ]);
+
+      var options = {
+        width: 600,
+        height: 563,
+        hAxis: {
+          title: "Date",
+          gridlines: { count: {{temp_items}}, color: '#CCC' },
+          format: 'dd-MMM-yyyy HH:mm' },
+        vAxis: {
+          title: 'Degrees'
+        },
+        title: 'Temperature',
+        curveType: 'function'  //Makes line curved
+      };
+
+      var chart = new google.visualization.LineChart(document.getElementById('chart_temps'));
+
+      chart.draw(data, options);
+
+    }
+
+      </script>
+ 
+<script>
+    google.load('visualization', '1', {packages: ['corechart']});
+    google.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+
+      var data = new google.visualization.DataTable();
+      data.addColumn('datetime', 'Time');  
+      data.addColumn('number', 'Humidity');      
+      data.addRows([
+          {% for row in hum %}
+            [new Date({{row[0][0:4]}},{{row[0][5:7]}}-1,{{row[0][8:10]}},{{row[0][11:13]}},{{row[0][14:16]}}),{{'%0.2f'|format(row[1])}}],
+          {% endfor %}
+        ]);
+
+      var options = {
+        width: 600,
+        height: 563,
+        hAxis: {
+          title: "Date",
+          gridlines: { count: {{hum_items}}, color: '#CCC' },
+          format: 'dd-MMM-yyyy HH:mm'        },
+        vAxis: {
+          title: 'Percent'
+        },
+        title: 'Humidity',
+        curveType: 'function'  //Makes line curved
+      };
+
+      var chart = new google.visualization.LineChart(document.getElementById('chart_humid'));
+
+      chart.draw(data, options);
+
+    }
+
+      </script>  
+</html>
