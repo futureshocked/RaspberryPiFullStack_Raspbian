@@ -48,6 +48,7 @@ import time
 import datetime
 import sys
 import Adafruit_DHT
+import sqlite3
 
 app = Flask(__name__)
 app.debug = True # Make this False if you are no longer debugging
@@ -87,7 +88,7 @@ def get_records():
 	if not validate_date(to_date_str):
 		to_date_str 	= time.strftime("%Y-%m-%d %H:%M")		# Validate date before sending it to the DB
 
-		# If range_h is defined, we don't need the from and to times
+	# If range_h is defined, we don't need the from and to times
 	if isinstance(range_h_int,int):	
 		time_now		= datetime.datetime.now()
 		time_from 		= time_now - datetime.timedelta(hours = range_h_int)
@@ -95,7 +96,6 @@ def get_records():
 		from_date_str   = time_from.strftime("%Y-%m-%d %H:%M")
 		to_date_str	    = time_to.strftime("%Y-%m-%d %H:%M")
 
-	import sqlite3
 	conn=sqlite3.connect('/var/www/lab_app/lab_app.db')
 	curs=conn.cursor()
 	curs.execute("SELECT * FROM temperatures WHERE rDateTime BETWEEN ? AND ?", (from_date_str, to_date_str))
