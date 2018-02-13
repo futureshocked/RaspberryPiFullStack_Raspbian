@@ -43,7 +43,6 @@ The historical records can be selected by specifying a date range in the request
 
 from flask import Flask, request, render_template
 import time
-import datetime
 import sys
 import Adafruit_DHT
 import datetime
