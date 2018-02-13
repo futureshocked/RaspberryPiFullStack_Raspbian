@@ -48,6 +48,7 @@ import time
 import datetime
 import sys
 import Adafruit_DHT
+import sqlite3
 
 app = Flask(__name__)
 app.debug = True # Make this False if you are no longer debugging
@@ -100,8 +101,7 @@ def get_records():
 		time_to   		= time_now
 		from_date_str   = time_from.strftime("%Y-%m-%d %H:%M")
 		to_date_str	    = time_to.strftime("%Y-%m-%d %H:%M")
-
-	import sqlite3
+	
 	conn=sqlite3.connect('/var/www/lab_app/lab_app.db')
 	curs=conn.cursor()
 	curs.execute("SELECT * FROM temperatures WHERE rDateTime BETWEEN ? AND ?", (from_date_str, to_date_str))
