@@ -24,7 +24,7 @@
   <body>
     <div class="container">
       <div class="row">
-      <form id="datetime_range" action="/lab_env_db" method="GET"> 
+      <form id="datetime_range" action="/lab_env_db" method="GET">
         <!-- <div class="row">          -->
           <div class="three columns">
             <label for="from">From date</label>
@@ -33,25 +33,25 @@
         <!-- </div> -->
         <!-- <div class="row"> -->
           <div class="three columns">
-            <label for="to">To date</label>           
+            <label for="to">To date</label>
             <input class="u-full-width" id="datetimepicker2" type="text" value="{{to_date}}" name="to">
-          </div>   
+          </div>
         <!-- </div>          -->
         <!-- <div class="row"> -->
-          <div class="two columns">    
-            <input type="hidden" class="timezone" name="timezone" />       
+          <div class="two columns">
+            <input type="hidden" class="timezone" name="timezone" />
             <input class="button-primary" type="submit" value="Submit" style="position:relative; top: 28px" id="submit_button" />
           </div>
         <!-- </div> -->
-      </form> 
+      </form>
     </div>
       <div class="row">
       <div class="eleven columns">
       <div class="one column">
           <a href="/lab_temp" style="position:relative;top:15px">Current</a>
        </div>
-        <form id="range_select" action = "/lab_env_db" method="GET">  
-          <input type="hidden" class="timezone" name="timezone" />      
+        <form id="range_select" action = "/lab_env_db" method="GET">
+          <input type="hidden" class="timezone" name="timezone" />
           <div class="one column">
             <input type="radio" name="range_h" value="3" id="radio_3" /><label for="radio_3">3hrs</label>
           </div>
@@ -64,7 +64,7 @@
           <div class="one column">
             <input type="radio" name="range_h" value="24" id="radio_24" /><label for="radio_24">24hrs</label>
           </div>
-        </form>          
+        </form>
       </div>
     </div>
       <div class="row">
@@ -105,30 +105,35 @@
               </tbody>
             </table>
         </div>
- 
+
         <div class="two-thirds column" style="margin-top: 5%">
-        <div class="row">                  
+        <div class="row">
           <div class="row">
             <div class="three columns">
                 <div id="chart_temps"></div>
                 <div id="chart_humid"></div>
             </div>
           </div>
-        </div>     
+        </div>
       </div>
     </div>
   </body>
-  <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
-  <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="/static/css/jquery.datetimepicker.css"/ >
-  <script src="/static/javascript/jquery.datetimepicker.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jstimezonedetect/1.0.4/jstz.min.js" ></script>
- 
- 
+
+  <!-- Fetch jQuery -->
+  <script src="//code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+
+  <!-- Datetimepicker files start -->
+  <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.17/jquery.datetimepicker.min.css"/ >
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.17/jquery.datetimepicker.full.min.js"></script>
+
+
+   <!-- jstimezonedetect script start -->
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jstimezonedetect/1.0.6/jstz.min.js" ></script>
+
   <script>
     jQuery( "#datetime_range" ).submit(function( event ) {
         timezone = jstz.determine();
-        jQuery(".timezone").val(timezone.name());      
+        jQuery(".timezone").val(timezone.name());
     });
 
     jQuery('#datetimepicker1').datetimepicker(
@@ -143,13 +148,13 @@
 
     jQuery("#range_select input[type=radio]").click(function(){
         timezone = jstz.determine();
-        jQuery(".timezone").val(timezone.name()); 
+        jQuery(".timezone").val(timezone.name());
         jQuery("#range_select").submit();
       });
     </script>
- 
+
   <script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1','packages':['corechart']}]}"></script>
- 
+
       <script>
        google.load('visualization', '1', {packages: ['corechart']});
     google.setOnLoadCallback(drawChart);
@@ -157,8 +162,8 @@
     function drawChart() {
 
       var data = new google.visualization.DataTable();
-      data.addColumn('datetime', 'Time');  
-      data.addColumn('number', 'Temperature');      
+      data.addColumn('datetime', 'Time');
+      data.addColumn('number', 'Temperature');
       data.addRows([
           {% for row in temp %}
             [new Date({{row[0][0:4]}},{{row[0][5:7]}},{{row[0][8:10]}},{{row[0][11:13]}},{{row[0][14:16]}}),{{'%0.2f'|format(row[1])}}],
@@ -186,7 +191,7 @@
     }
 
       </script>
- 
+
 <script>
     google.load('visualization', '1', {packages: ['corechart']});
     google.setOnLoadCallback(drawChart);
@@ -194,8 +199,8 @@
     function drawChart() {
 
       var data = new google.visualization.DataTable();
-      data.addColumn('datetime', 'Time');  
-      data.addColumn('number', 'Humidity');      
+      data.addColumn('datetime', 'Time');
+      data.addColumn('number', 'Humidity');
       data.addRows([
           {% for row in hum %}
             [new Date({{row[0][0:4]}},{{row[0][5:7]}},{{row[0][8:10]}},{{row[0][11:13]}},{{row[0][14:16]}}),{{'%0.2f'|format(row[1])}}],
@@ -222,7 +227,7 @@
 
     }
 
-      </script>  
+      </script>
 </html>
 Sign up for free to join this conversation on GitHub. Already have an account? Sign in to comment
 
