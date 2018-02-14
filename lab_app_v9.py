@@ -52,8 +52,7 @@ import sys
 import Adafruit_DHT
 import arrow
 import sqlite3
-import plotly.plotly as py
-from plotly.graph_objs import *
+
 
 app = Flask(__name__)
 app.debug = True # Make this False if you are no longer debugging
@@ -147,65 +146,7 @@ def get_records():
 
 	return [temperatures, humidities, timezone, from_date_str, to_date_str]
 
-@app.route("/to_plotly", methods=['GET'])  #This method will send the data to ploty.
-def to_plotly():
-	temperatures, humidities, timezone, from_date_str, to_date_str = get_records()
 
-	# Create new record tables so that datetimes are adjusted back to the user browser's time zone.
-	time_series_adjusted_tempreratures  = []
-	time_series_adjusted_humidities 	= []
-	time_series_temprerature_values 	= []
-	time_series_humidity_values 		= []
-
-	for record in temperatures:
-		local_timedate = arrow.get(record[0], "YYYY-MM-DD HH:mm").to(timezone)
-		time_series_adjusted_tempreratures.append(local_timedate.format('YYYY-MM-DD HH:mm'))
-		time_series_temprerature_values.append(round(record[2],2))
-
-	for record in humidities:
-		local_timedate = arrow.get(record[0], "YYYY-MM-DD HH:mm").to(timezone)
-		time_series_adjusted_humidities.append(local_timedate.format('YYYY-MM-DD HH:mm')) #Best to pass datetime in text
-																						  #so that Plotly respects it
-		time_series_humidity_values.append(round(record[2],2))
-
-	temp = Scatter(
-        		x=time_series_adjusted_tempreratures,
-        		y=time_series_temprerature_values,
-        		name='Temperature'
-    				)
-	hum = Scatter(
-        		x=time_series_adjusted_humidities,
-        		y=time_series_humidity_values,
-        		name='Humidity',
-        		yaxis='y2'
-    				)
-
-	data = Data([temp, hum])
-
-	layout = Layout(
-					title="Temperature and humidity in Peter's lab",
-				    xaxis=XAxis(
-				        type='date',
-				        autorange=True
-				    ),
-				    yaxis=YAxis(
-				    	title='Celcius',
-				        type='linear',
-				        autorange=True
-				    ),
-				    yaxis2=YAxis(
-				    	title='Percent',
-				        type='linear',
-				        autorange=True,
-				        overlaying='y',
-				        side='right'
-				    )
-
-					)
-	fig = Figure(data=data, layout=layout)
-	plot_url = py.plot(fig, filename='lab_temp_hum')
-
-	return plot_url
 
 def validate_date(d):
     try:
