@@ -5,7 +5,7 @@ Version 10
 
 1. WHAT IT DOES
 This version adds support for Plotly.
- 
+
 2. REQUIRES
 * Any Raspberry Pi
 
@@ -29,7 +29,7 @@ Python 3
 6. WARNING!
 None
 
-7. CREATED 
+7. CREATED
 
 8. TYPICAL OUTPUT
 A simple web page served by this flask application in the user's browser.
@@ -89,8 +89,8 @@ def lab_env_db():
 
 	return render_template("lab_env_db.html",	timezone		= timezone,
 												temp 			= time_adjusted_temperatures,
-												hum 			= time_adjusted_humidities, 
-												from_date 		= from_date_str, 
+												hum 			= time_adjusted_humidities,
+												from_date 		= from_date_str,
 												to_date 		= to_date_str,
 												temp_items 		= len(temperatures),
 												hum_items 		= len(humidities),
@@ -98,7 +98,7 @@ def lab_env_db():
 
 												)
 
-def get_records():	
+def get_records():
 	from_date_str 	= request.args.get('from',time.strftime("%Y-%m-%d 00:00")) #Get the from date value from the URL
 	to_date_str 	= request.args.get('to',time.strftime("%Y-%m-%d %H:%M"))   #Get the to date value from the URL
 	timezone 		= request.args.get('timezone','Etc/UTC');
@@ -107,15 +107,15 @@ def get_records():
 
 	print ("REQUEST:")
 	print (request.args)
-	
-	try: 
+
+	try:
 		range_h_int	= int(range_h_form)
 	except:
 		print ("range_h_form not a number")
 
 
 	print ("Received from browser: %s, %s, %s, %s" % (from_date_str, to_date_str, timezone, range_h_int))
-	
+
 	if not validate_date(from_date_str):			# Validate date before sending it to the DB
 		from_date_str 	= time.strftime("%Y-%m-%d 00:00")
 	if not validate_date(to_date_str):
@@ -126,16 +126,16 @@ def get_records():
 	to_date_obj         = datetime.datetime.strptime(to_date_str,'%Y-%m-%d %H:%M')
 
 	# If range_h is defined, we don't need the from and to times
-	if isinstance(range_h_int,int):	
+	if isinstance(range_h_int,int):
 		arrow_time_from = arrow.utcnow().replace(hours=-range_h_int)
 		arrow_time_to   = arrow.utcnow()
-		from_date_utc   = arrow_time_from.strftime("%Y-%m-%d %H:%M")	
+		from_date_utc   = arrow_time_from.strftime("%Y-%m-%d %H:%M")
 		to_date_utc     = arrow_time_to.strftime("%Y-%m-%d %H:%M")
 		from_date_str   = arrow_time_from.to(timezone).strftime("%Y-%m-%d %H:%M")
 		to_date_str	    = arrow_time_to.to(timezone).strftime("%Y-%m-%d %H:%M")
 	else:
 		#Convert datetimes to UTC so we can retrieve the appropriate records from the database
-		from_date_utc   = arrow.get(from_date_obj, timezone).to('Etc/UTC').strftime("%Y-%m-%d %H:%M")	
+		from_date_utc   = arrow.get(from_date_obj, timezone).to('Etc/UTC').strftime("%Y-%m-%d %H:%M")
 		to_date_utc     = arrow.get(to_date_obj, timezone).to('Etc/UTC').strftime("%Y-%m-%d %H:%M")
 
 	conn 			    = sqlite3.connect('/var/www/lab_app/lab_app.db')
@@ -151,62 +151,62 @@ def get_records():
 @app.route("/to_plotly", methods=['GET'])  #This method will send the data to ploty.
 def to_plotly():
 	temperatures, humidities, timezone, from_date_str, to_date_str = get_records()
- 
-	# Create new record tables so that datetimes are adjusted back to the user browser's time zone.	
-	time_series_adjusted_tempreratures  = []
+
+	# Create new record tables so that datetimes are adjusted back to the user browser's time zone.
+	time_series_adjusted_temperatures   = []
 	time_series_adjusted_humidities 	= []
-	time_series_temprerature_values 	= []
+	time_series_temperature_values 	    = []
 	time_series_humidity_values 		= []
- 
+
 	for record in temperatures:
 		local_timedate = arrow.get(record[0], "YYYY-MM-DD HH:mm").to(timezone)
 		time_series_adjusted_tempreratures.append(local_timedate.format('YYYY-MM-DD HH:mm'))
 		time_series_temprerature_values.append(round(record[2],2))
- 
+
 	for record in humidities:
 		local_timedate = arrow.get(record[0], "YYYY-MM-DD HH:mm").to(timezone)
 		time_series_adjusted_humidities.append(local_timedate.format('YYYY-MM-DD HH:mm')) #Best to pass datetime in text
 																						  #so that Plotly respects it
 		time_series_humidity_values.append(round(record[2],2))
- 
+
 	temp = Scatter(
-        		x=time_series_adjusted_tempreratures,
-        		y=time_series_temprerature_values,
-        		name='Temperature'
+        		x     = time_series_adjusted_temperatures,
+        		y     = time_series_temperature_values,
+        		name  = 'Temperature'
     				)
 	hum = Scatter(
-        		x=time_series_adjusted_humidities,
-        		y=time_series_humidity_values,
-        		name='Humidity',
-        		yaxis='y2'
-    				)		
- 
+        		x     = time_series_adjusted_humidities,
+        		y     = time_series_humidity_values,
+        		name  = 'Humidity',
+        		yaxis = 'y2'
+    				)
+
 	data = Data([temp, hum])
- 
+
 	layout = Layout(
-					title="Temperature and humidity in Peter's lab",
-				    xaxis=XAxis(
-				        type='date',
-				        autorange=True
+					title  = "Temperature and humidity in Peter's lab",
+				    xaxis  = XAxis(
+				        type      = 'date',
+				        autorange = True
 				    ),
-				    yaxis=YAxis(
-				    	title='Celcius',
-				        type='linear',
-				        autorange=True
+				    yaxis          = YAxis(
+				    	title      = 'Celcius',
+				        type       = 'linear',
+				        autorange  = True
 				    ),
-				    yaxis2=YAxis(
-				    	title='Percent',
-				        type='linear',
-				        autorange=True,
-				        overlaying='y',
-				        side='right'
+				    yaxis2 = YAxis(
+				    	title      = 'Percent',
+				        type       = 'linear',
+				        autorange  = True,
+				        overlaying = 'y',
+				        side       = 'right'
 				    )
- 
+
 					)
-	fig = Figure(data=data, layout=layout)
-	plot_url = py.plot(fig, filename='lab_temp_hum')
- 
-	return plot_url 
+	fig      = Figure(data = data, layout = layout)
+	plot_url = py.plot(fig, filename = 'lab_temp_hum')
+
+	return plot_url
 
 def validate_date(d):
     try:
