@@ -160,8 +160,8 @@ def to_plotly():
 
 	for record in temperatures:
 		local_timedate = arrow.get(record[0], "YYYY-MM-DD HH:mm").to(timezone)
-		time_series_adjusted_tempreratures.append(local_timedate.format('YYYY-MM-DD HH:mm'))
-		time_series_temprerature_values.append(round(record[2],2))
+		time_series_adjusted_temperatures.append(local_timedate.format('YYYY-MM-DD HH:mm'))
+		time_series_temperature_values.append(round(record[2],2))
 
 	for record in humidities:
 		local_timedate = arrow.get(record[0], "YYYY-MM-DD HH:mm").to(timezone)
