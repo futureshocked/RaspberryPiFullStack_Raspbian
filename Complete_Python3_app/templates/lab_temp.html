@@ -24,14 +24,14 @@
         <div class="two-third column" style="margin-top: 5%">
             <h2>Real time lab conditions</h2>
             <h1>Temperature: {{"{0:0.1f}".format(temp) }}°C</h1>
-            <h1>Humidity: {{"{0:0.1f}".format(hum)}}%</h1>  
+            <h1>Humidity: {{"{0:0.1f}".format(hum)}}%</h1>
             <p>This page refreshes every 10 seconds</p>
-        </div>   
+        </div>
       </div>
       <div class="row">
       <div class="eleven columns">
-        <form id="range_select" action = "/lab_env_db" method="GET">  
-          <input type="hidden" class="timezone" name="timezone" />      
+        <form id="range_select" action = "/lab_env_db" method="GET">
+          <input type="hidden" class="timezone" name="timezone" />
           <div class="one column">
             <input type="radio" name="range_h" value="3" id="radio_3" /><label for="radio_3">3hrs</label>
           </div>
@@ -44,21 +44,25 @@
           <div class="one column">
             <input type="radio" name="range_h" value="24" id="radio_24" /><label for="radio_24">24hrs</label>
           </div>
-        </form>          
+        </form>
       </div>
-    </div>           
-  </body> 
-<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jstimezonedetect/1.0.4/jstz.min.js" ></script>
+    </div>
+  </body>
+
+  <!-- Fetch jQuery -->
+  <script src="//code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+
+   <!-- jstimezonedetect script start -->
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jstimezonedetect/1.0.6/jstz.min.js" ></script>
 <script>
 jQuery( document ).ready(function() {
     timezone = jstz.determine();
-    jQuery("#timezone").text(timezone.name());     
+    jQuery("#timezone").text(timezone.name());
 });
   jQuery("#range_select input[type=radio]").click(function(){
     timezone = jstz.determine();
-    jQuery(".timezone").val(timezone.name()); 
+    jQuery(".timezone").val(timezone.name());
     jQuery("#range_select").submit();
   });
-</script> 
+</script>
 </html>

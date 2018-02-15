@@ -15,7 +15,7 @@ Takes a reading from a DHT sensor and records the values in an SQLite3 database 
 * Jumper wires
 
 3. ORIGINAL WORK
-Raspberry Full stack 2015, Peter Dalmaris
+Raspberry Full stack 2018, Peter Dalmaris
 
 4. HARDWARE
 D17: Data pin for sensor
