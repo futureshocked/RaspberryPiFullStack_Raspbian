@@ -125,7 +125,7 @@
     </div>
   </body>
   <!-- Fetch jQuery -->
-  <script src="//code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="//code.jquery.com/jquery-3.3.1.min.js"></script>
 
   <!-- Datetimepicker files start -->
   <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.17/jquery.datetimepicker.min.css"/ >
@@ -161,9 +161,7 @@
     jQuery("#plotly").click(function(){
       jQuery("#plotly_wait").text("Sending data...");
       jQuery("#plotly_url").text("");
-      {% autoescape false %}
-      jQuery.get("/to_plotly?{{query_string}}")
-      {% endautoescape %}
+      jQuery.get("/to_plotly", {from:"{{from_date}}", to:"{{to_date}}", timezone:"{{timezone}}"})
         .done(function( data ) {
           jQuery("#plotly_url").attr("href",data);
           jQuery("#plotly_url").text("Click to see your plot");
