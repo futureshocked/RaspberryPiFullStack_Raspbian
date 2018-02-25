@@ -1,0 +1,51 @@
+FILE NAME
+360_seting_up_system_Python_notes.txt
+1. WHAT IT DOES
+This file contains the command line instructions
+used in lecture 0360a and 0360b. You may copy these
+instructions in your command line for convenience.
+
+2. REQUIRES
+Any Raspberry Pi
+Log on as user "pi"
+
+3. ORIGINAL WORK
+Raspberry Full stack 2018, Peter Dalmaris
+
+4. HARDWARE
+Any Raspberry Pi.
+
+5. SOFTWARE
+Raspbian
+Command line terminal
+Simple text editor
+
+6. WARNING!
+None
+
+7. CREATED
+Peter Dalmaris, 2018
+
+8. TYPICAL OUTPUT
+LED blinks
+---------------------------------------------
+
+Step 1
+------
+$ sudo apt-get update
+
+Step 2
+------
+$ sudo apt-get upgrade
+
+Step 3
+------
+$ sudo apt-get install build-essential
+
+Step 4
+------
+$ sudo apt-get install libncurses5-dev libncursesw5-dev libreadline6-dev
+
+Step 5
+------
+$ sudo apt-get install libbz2-dev libexpat1-dev liblzma-dev zlib1g-dev libsqlite3-dev libgdbm-dev tk8.5-dev
