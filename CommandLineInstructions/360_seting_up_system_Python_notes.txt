@@ -5,6 +5,9 @@ This file contains the command line instructions
 used in lecture 0360a and 0360b. You may copy these
 instructions in your command line for convenience.
 
+This set of instructions will result in installing
+Python 3.6.4 at the system level. 
+
 2. REQUIRES
 Any Raspberry Pi
 Log on as user "pi"
@@ -49,3 +52,36 @@ $ sudo apt-get install libncurses5-dev libncursesw5-dev libreadline6-dev
 Step 5
 ------
 $ sudo apt-get install libbz2-dev libexpat1-dev liblzma-dev zlib1g-dev libsqlite3-dev libgdbm-dev tk8.5-dev
+
+Step 6
+------
+$ cd ~
+$ mkdir python-source
+$ cd python-source/
+
+Step 7
+------
+$ wget https://www.python.org/ftp/python/3.6.4/Python-3.6.4.tgz
+
+Step 8
+------
+$ tar zxvf Python-3.6.4.tgz
+
+Step 9
+------
+$ cd Python-3.6.4/
+$ ./configure --prefix=/usr/local/opt/python-3.6.4
+
+Step 10
+-------
+$ make
+
+Step 11
+-------
+$ sudo make install
+
+Step 12
+-------
+$ /usr/local/opt/python-3.6.4/bin/python3.6 --version
+
+(The response should be: Python 3.6.4)
