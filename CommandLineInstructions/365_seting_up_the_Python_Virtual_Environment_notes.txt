@@ -1,0 +1,53 @@
+FILE NAME
+365_seting_up_the_Python_Virtual_Environment_notes.txt
+1. WHAT IT DOES
+This file contains the command line instructions
+used in lecture 0365. You may copy these
+instructions in your command line for convenience.
+
+This set of instructions will result in installing
+a Python 3.6.4 virtual environment for the course application.
+
+2. REQUIRES
+Any Raspberry Pi
+Log on as user "pi", then switch to "root".
+
+3. ORIGINAL WORK
+Raspberry Full stack 2018, Peter Dalmaris
+
+4. HARDWARE
+Any Raspberry Pi.
+
+5. SOFTWARE
+Raspbian
+Command line terminal
+Simple text editor
+
+6. WARNING!
+None
+
+7. CREATED
+Peter Dalmaris, 2018
+
+8. TYPICAL OUTPUT
+-
+---------------------------------------------
+Step 1
+------
+$ sudo su
+
+Step 2
+------
+$ mkdir /var/www
+$ mkdir /var/www/lab_app/
+$ cd /var/www/lab_app/
+
+Step 3
+------
+$ /usr/local/opt/python-3.6.4/bin/python3.6 -m venv .
+
+Step 4
+------
+$ . bin/activate
+
+(Notice that the beginning of the command line shows the name of the active virtual environment)
