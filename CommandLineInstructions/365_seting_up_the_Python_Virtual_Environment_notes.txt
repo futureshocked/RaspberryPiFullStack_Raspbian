@@ -51,3 +51,7 @@ Step 4
 $ . bin/activate
 
 (Notice that the beginning of the command line shows the name of the active virtual environment)
+
+Step 5
+------
+$ deactivate
