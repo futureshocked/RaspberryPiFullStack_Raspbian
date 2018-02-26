@@ -1,5 +1,6 @@
 FILE NAME
 360_seting_up_system_Python_notes.txt
+
 1. WHAT IT DOES
 This file contains the command line instructions
 used in lecture 0360a and 0360b. You may copy these

@@ -1,5 +1,6 @@
 FILE NAME
 365_seting_up_the_Python_Virtual_Environment_notes.txt
+
 1. WHAT IT DOES
 This file contains the command line instructions
 used in lecture 0365. You may copy these
