@@ -6,7 +6,7 @@ used in lecture 0360a and 0360b. You may copy these
 instructions in your command line for convenience.
 
 This set of instructions will result in installing
-Python 3.6.4 at the system level. 
+Python 3.6.4 at the system level.
 
 2. REQUIRES
 Any Raspberry Pi
@@ -30,7 +30,7 @@ None
 Peter Dalmaris, 2018
 
 8. TYPICAL OUTPUT
-LED blinks
+-
 ---------------------------------------------
 
 Step 1
