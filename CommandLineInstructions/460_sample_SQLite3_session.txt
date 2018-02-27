@@ -1,7 +1,54 @@
-Example SQLite3 session
+FILE NAME
+460_sample_SQLite3_session.txt
 
-#Start sqlite3 and create or open a database file
->sqlite3 lab_app.db
+1. WHAT IT DOES
+This file contains the example SQL commands that
+you can use on the SQLite3 command line interpreter.
+
+This set of instructions will result in creating a
+database for use with the course application.
+
+2. REQUIRES
+Any Raspberry Pi
+Log on as user "pi".
+
+3. ORIGINAL WORK
+Raspberry Full stack 2018, Peter Dalmaris
+
+4. HARDWARE
+Any Raspberry Pi.
+
+5. SOFTWARE
+Raspbian
+SQLite3
+Command line terminal
+Simple text editor
+
+6. WARNING!
+None
+
+7. CREATED
+Peter Dalmaris, 2018
+
+8. TYPICAL OUTPUT
+-
+---------------------------------------------
+In Raspbian:
+
+Step 1
+------
+$ sudo su
+
+Step 2
+------
+$ cd /var/www/lab_app
+
+Step 3
+------
+$ sqlite3 sample.sql
+
+In SQLite3 command line interface (Example SQLite3 session):
+
 sqlite> .help
 
 #Create a new table
