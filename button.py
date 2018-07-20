@@ -43,8 +43,10 @@ Button status in the command line terminal.
 
 
 import RPi.GPIO as GPIO   ## Import GPIO Library
+import time               ## Import the time library
  
 inPin = 8                 ## Switch connected to pin 8
+GPIO.setwarnings(False)     ## Disable warnings
 GPIO.setmode(GPIO.BOARD)    ## Use BOARD pin numbering
 GPIO.setup(inPin, GPIO.IN)  ## Set pin 8 to INPUT
  
@@ -54,5 +56,5 @@ while True:                 ## Do this forever
         print ("Not Pressed")
     else:                     ## Else switch is pressed
         print ("Pressed")
- 
+    time.sleep(0.1)           ## the delay is needed for the Raspberry Pi 3 because of its cpu speed
 GPIO.cleanup() 
