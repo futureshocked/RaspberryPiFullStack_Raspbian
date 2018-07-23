@@ -56,32 +56,36 @@ $ sudo apt-get install libbz2-dev libexpat1-dev liblzma-dev zlib1g-dev libsqlite
 
 Step 6
 ------
+$ sudo apt-get install python-dev
+
+Step 7
+------
 $ cd ~
 $ mkdir python-source
 $ cd python-source/
 
-Step 7
+Step 8
 ------
 $ wget https://www.python.org/ftp/python/3.6.4/Python-3.6.4.tgz
 
-Step 8
+Step 9
 ------
 $ tar zxvf Python-3.6.4.tgz
 
-Step 9
+Step 10
 ------
 $ cd Python-3.6.4/
 $ ./configure --prefix=/usr/local/opt/python-3.6.4
 
-Step 10
+Step 11
 -------
 $ make
 
-Step 11
+Step 12
 -------
 $ sudo make install
 
-Step 12
+Step 13
 -------
 $ /usr/local/opt/python-3.6.4/bin/python3.6 --version
 
