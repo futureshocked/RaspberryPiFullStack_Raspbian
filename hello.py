@@ -40,6 +40,13 @@ A simple web page served by this flask application in the user's browser.
 from flask import Flask
 app = Flask(__name__)
 
+## RBP 2018-09-13
+## Adding the following line ouputs the value
+## of '__name__' on the command line.
+## This code will print out the value of the __name__ variable as the program starts.
+## Thank you to Richard Park for the suggestion to include it.
+print("Value of '__name__' = ", __name__)
+
 @app.route("/")
 def hello():
     return "Hello World!"
