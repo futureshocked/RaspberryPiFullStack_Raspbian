@@ -44,7 +44,7 @@ $ apt-get update
 
 Step 2
 ------
-$ apt-get update
+$ apt-get upgrade
 
 Step 3
 ------
