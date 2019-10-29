@@ -125,7 +125,7 @@ def get_records():
 
 	# If range_h is defined, we don't need the from and to times
 	if isinstance(range_h_int,int):
-		arrow_time_from = arrow.utcnow().replace(hours=-range_h_int)
+		arrow_time_from = arrow.utcnow().shift(hours=-range_h_int)
 		arrow_time_to   = arrow.utcnow()
 		from_date_utc   = arrow_time_from.strftime("%Y-%m-%d %H:%M")
 		to_date_utc     = arrow_time_to.strftime("%Y-%m-%d %H:%M")
