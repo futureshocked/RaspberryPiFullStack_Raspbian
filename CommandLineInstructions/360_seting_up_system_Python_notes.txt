@@ -66,16 +66,16 @@ $ cd python-source/
 
 Step 8
 ------
-$ wget https://www.python.org/ftp/python/3.6.4/Python-3.6.4.tgz
+$ wget https://www.python.org/ftp/python/3.8.1/Python-3.8.1.tgz
 
 Step 9
 ------
-$ tar zxvf Python-3.6.4.tgz
+$ tar zxvf Python-3.8.1.tgz
 
 Step 10
 ------
-$ cd Python-3.6.4/
-$ ./configure --prefix=/usr/local/opt/python-3.6.4
+$ cd Python-3.8.1/
+$ ./configure --prefix=/usr/local/opt/python-3.8.1
 
 Step 11
 -------
@@ -87,6 +87,6 @@ $ sudo make install
 
 Step 13
 -------
-$ /usr/local/opt/python-3.6.4/bin/python3.6 --version
+$ /usr/local/opt/python-3.8.1/bin/python3.8 --version
 
-(The response should be: Python 3.6.4)
+(The response should be: Python 3.8.1)
