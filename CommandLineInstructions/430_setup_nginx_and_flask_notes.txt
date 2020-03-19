@@ -56,6 +56,7 @@ $ pip install flask
 
 Step 5
 ------
+$ apt-get install vim
 $ vim hello.py
 
 Step 6
