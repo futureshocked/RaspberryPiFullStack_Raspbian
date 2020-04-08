@@ -78,12 +78,12 @@ def lab_env_db():
     time_adjusted_temperatures = []
     time_adjusted_humidities   = []
     for record in temperatures:
-        local_timedate = arrow.get(record[0], "YYYY-MM-DD HH:mm").to(timezone)
-        time_adjusted_temperatures.append([local_timedate.format('YYYY-MM-DD HH:mm'), round(record[2],2)])
+        local_timedate = arrow.get(record[0], "YYYY-MM-DD HH:mm:ss").to(timezone)
+        time_adjusted_temperatures.append([local_timedate.format('YYYY-MM-DD HH:mm:ss'), round(record[2],2)])
 
     for record in humidities:
-        local_timedate = arrow.get(record[0], "YYYY-MM-DD HH:mm").to(timezone)
-        time_adjusted_humidities.append([local_timedate.format('YYYY-MM-DD HH:mm'), round(record[2],2)])
+        local_timedate = arrow.get(record[0], "YYYY-MM-DD HH:mm:ss").to(timezone)
+        time_adjusted_humidities.append([local_timedate.format('YYYY-MM-DD HH:mm:ss'), round(record[2],2)])
 
     print ("rendering lab_env_db.html with: %s, %s, %s" % (timezone, from_date_str, to_date_str))
 
