@@ -159,13 +159,13 @@ def to_plotly():
 	time_series_humidity_values 		= []
 
 	for record in temperatures:
-		local_timedate = arrow.get(record[0], "YYYY-MM-DD HH:mm").to(timezone)
-		time_series_adjusted_temperatures.append(local_timedate.format('YYYY-MM-DD HH:mm'))
+		local_timedate = arrow.get(record[0], "YYYY-MM-DD HH:mm:ss").to(timezone)
+		time_series_adjusted_temperatures.append(local_timedate.format('YYYY-MM-DD HH:mm:ss'))
 		time_series_temperature_values.append(round(record[2],2))
 
 	for record in humidities:
-		local_timedate = arrow.get(record[0], "YYYY-MM-DD HH:mm").to(timezone)
-		time_series_adjusted_humidities.append(local_timedate.format('YYYY-MM-DD HH:mm')) #Best to pass datetime in text
+		local_timedate = arrow.get(record[0], "YYYY-MM-DD HH:mm:ss").to(timezone)
+		time_series_adjusted_humidities.append(local_timedate.format('YYYY-MM-DD HH:mm:ss')) #Best to pass datetime in text
 																						  #so that Plotly respects it
 		time_series_humidity_values.append(round(record[2],2))
 
