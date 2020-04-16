@@ -68,8 +68,6 @@ def lab_temp():
 @app.route("/lab_env_db", methods=['GET']) 
 def lab_env_db():
 	temperatures, humidities, from_date_str, to_date_str = get_records()
-	#return render_template("lab_env_db.html",temp=temperatures,hum=humidities)
-	#return render_template("lab_env_db.html",temp 	= temperatures,hum= humidities,	temp_items= len(temperatures),hum_items= len(humidities))
 	return render_template(	"lab_env_db.html", 	temp 			= temperatures,
 							hum 			= humidities,
 							from_date 		= from_date_str, 
