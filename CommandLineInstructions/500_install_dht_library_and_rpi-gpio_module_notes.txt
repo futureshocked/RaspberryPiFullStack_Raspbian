@@ -1,0 +1,55 @@
+FILE NAME
+500_install_dht_library_and_rpi-gpio_module_notes.txt
+
+1. WHAT IT DOES
+This file contains the command line instructions
+used in lecture 0500b. You may copy these
+instructions in your command line for convenience.
+
+This set of instructions will result in installing
+the DHT library and the RPI-GPIO module.
+
+2. REQUIRES
+Any Raspberry Pi
+Log on as user "pi", then switch to "root".
+
+3. ORIGINAL WORK
+Raspberry Full stack 2018, Peter Dalmaris
+
+4. HARDWARE
+Any Raspberry Pi.
+
+5. SOFTWARE
+Raspbian
+Command line terminal
+Simple text editor
+
+6. WARNING!
+None
+
+7. CREATED
+Peter Dalmaris, 2018
+
+8. TYPICAL OUTPUT
+-
+---------------------------------------------
+
+The following assumes that you have logged on as 'root'.
+
+Step 1
+------
+$ cd /var/www/lab_app
+$ . bin/activate
+
+Step 2
+------
+$ pip install rpi.gpio
+
+Step 3
+------
+$ git clone https://github.com/adafruit/Adafruit_Python_DHT.git
+
+Step 4
+------
+$ cd Adafruit_Python_DHT/
+$ python setup.py install
