@@ -63,7 +63,7 @@ GPIO.setup(pin, GPIO.OUT)   	## Set pin 7 to OUTPUT
 radio = RF24(RPI_V2_GPIO_P1_26, RPI_V2_GPIO_P1_24, BCM2835_SPI_SPEED_8MHZ)
 network = RF24Network(radio)
 
-millis = lambda: int(round(time.time() * 1000))
+# millis = lambda: int(round(time.time() * 1000))
 octlit = lambda n: int(n, 8)
 
 # Address of our node in Octal format (01, 021, etc)
