@@ -150,11 +150,12 @@ def get_records():
 
     conn 			    = sqlite3.connect('/var/www/lab_app/lab_app.db')
     curs 			    = conn.cursor()
+	
     temp_sql = "SELECT * FROM temperatures WHERE (rDateTime BETWEEN '%s' AND '%s') AND sensorID = %s" % (from_date_utc.format('YYY-MM-DD HH:mm'), to_date_utc.format('YYY-MM-DD HH:mm'), sensor_id)
     print(temp_sql)
     curs.execute(temp_sql)
     temperatures 	    = curs.fetchall()
-    #curs.execute("SELECT * FROM humidities WHERE (rDateTime BETWEEN '2020-01-26 00:00' AND '2020-01-26 05:50') AND sensorID = 3")
+
     hum_sql = "SELECT * FROM humidities WHERE sensorID = ? AND (rDateTime BETWEEN ? AND ?)", (sensor_id, from_date_utc.format('YYYY-MM-DD HH:mm'), to_date_utc.format('YYYY-MM-DD HH:mm'))
     curs.execute(hum_sql)
     humidities 		    = curs.fetchall()
