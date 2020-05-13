@@ -156,7 +156,7 @@ def get_records():
     curs.execute(temp_sql)
     temperatures 	    = curs.fetchall()
 
-    hum_sql = "SELECT * FROM humidities WHERE sensorID = ? AND (rDateTime BETWEEN ? AND ?)", (sensor_id, from_date_utc.format('YYYY-MM-DD HH:mm'), to_date_utc.format('YYYY-MM-DD HH:mm'))
+    hum_sql = "SELECT * FROM humidities WHERE sensorID = %s AND (rDateTime BETWEEN '%s' AND '%s')" % (sensor_id, from_date_utc.format('YYYY-MM-DD HH:mm'), to_date_utc.format('YYYY-MM-DD HH:mm'))
     curs.execute(hum_sql)
     humidities 		    = curs.fetchall()
     print(temperatures)
