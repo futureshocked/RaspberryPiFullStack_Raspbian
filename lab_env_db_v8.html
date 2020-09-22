@@ -7,6 +7,7 @@
     <title>Lab Conditions by RPi</title>
     <meta name="description" content="Lab conditions - RPi">
     <meta name="author" content="Peter Dalmaris">
+    <meta http-equiv="refresh" content="600">
     <!-- Mobile Specific Metas
     –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -23,26 +24,43 @@
   </head>
   <body>
     <div class="container">
-      <!-- Datetimepicker form start -->
       <div class="row">
-        <form id="datetime_range" action="/lab_env_db" method="GET"> 
-            <div class="three columns">
-              <label for="from">From date</label>
-              <input class="u-full-width" id="datetimepicker1" type="text" value="{{from_date}}" name="from">
-            </div>        
-            <div class="three columns">
-              <label for="to">To date</label>           
-              <input class="u-full-width" id="datetimepicker2" type="text" value="{{to_date}}" name="to">
-            </div>           
-            <div class="two columns">           
-              <input class="button-primary" type="submit" value="Submit" style="position:relative; top: 28px" id="submit_button" />
-            </div>        
-        </form> 
+	      <form id="datetime_range" action="/lab_env_db" method="GET">
+	        <!-- <div class="row">          -->
+	          <div class="three columns">
+	            <label for="from">From date</label>
+	            <input class="u-full-width" id="datetimepicker1" type="text" value="{{from_date}}" name="from">
+	          </div>
+	        <!-- </div> -->
+	        <!-- <div class="row"> -->
+	          <div class="three columns">
+	            <label for="to">To date</label>
+	            <input class="u-full-width" id="datetimepicker2" type="text" value="{{to_date}}" name="to">
+	          </div>
+	        <!-- </div>          -->
+		<div class="three columns">
+			<label for="sensor_id">Sensor ID</label>
+			<input class="u-full-width" id="sensor_id" type="text" value="{{sensorid}}" name="sensor_id">
+		</div>
+	        <!-- <div class="row"> -->
+	          <div class="two columns">
+	            <input type="hidden" class="timezone" name="timezone" />
+	            <input class="button-primary" type="submit" value="Submit" style="position:relative; top: 28px" id="submit_button" />
+	          </div>
+	        <!-- </div> -->
+	      </form>
       </div>
-    <!-- Datetimepicker form end -->
       <div class="row">
       <div class="eleven columns">
-        <form id="range_select" action = "/lab_env_db" method="GET">        
+      	<div class="one column">
+      		<div class="one column">
+			      <a href="" id="plotly" style="position:relative;top:15px">Plotly</a>
+			</div>
+          <a href="/lab_temp" style="position:relative;top:15px">Current</a>
+       	</div>
+        <form id="range_select" action = "/lab_env_db" method="GET">
+          <input type="hidden" name="timezone" class="timezone" />
+          <input type="hidden" name="sensor_id" class="sensor_id" />
           <div class="one column">
             <input type="radio" name="range_h" value="3" id="radio_3" /><label for="radio_3">3hrs</label>
           </div>
@@ -55,9 +73,12 @@
           <div class="one column">
             <input type="radio" name="range_h" value="24" id="radio_24" /><label for="radio_24">24hrs</label>
           </div>
-        </form>          
+        </form>
       </div>
     </div>
+    <div class="row">
+     <a href="" id="plotly_url" target="_blank"></a><span id="plotly_wait"></span>
+	</div>
       <div class="row">
         <div class="one-third column" style="margin-top: 5%">
           <strong>Showing all records</strong>
@@ -73,7 +94,7 @@
                 {% for row in temp %}
                 <tr>
                   <td>{{row[0]}}</td>
-                  <td>{{'%0.2f'|format(row[2])}}</td>
+                  <td>{{'%0.2f'|format(row[1])}}</td>
                 </tr>
                 {% endfor %}
               </tbody>
@@ -90,33 +111,43 @@
                 {% for row in hum %}
                 <tr>
                   <td>{{row[0]}}</td>
-                  <td>{{'%0.2f'|format(row[2])}}</td>
+                  <td>{{'%0.2f'|format(row[1])}}</td>
                 </tr>
                 {% endfor %}
               </tbody>
             </table>
         </div>
-      <!-- Google Charts Code start -->
-      <div class="two-thirds column" style="margin-top: 5%">
-        <div class="row">                  
+
+        <div class="two-thirds column" style="margin-top: 5%">
+        <div class="row">
           <div class="row">
             <div class="three columns">
-              <div id="chart_temps"></div>
-              <div id="chart_humid"></div>
+                <div id="chart_temps"></div>
+                <div id="chart_humid"></div>
             </div>
           </div>
-        </div>     
+        </div>
       </div>
-      <!-- Google Charts Code end -->
     </div>
   </body>
-  <script src="//code.jquery.com/jquery-3.5.0.slim.min.js"></script>
-  
+  <!-- Fetch jQuery -->
+  <script src="//code.jquery.com/jquery-3.5.0.min.js"></script>
 
   <!-- Datetimepicker files start -->
   <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css"/ >
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+
+
+   <!-- jstimezonedetect script start -->
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jstimezonedetect/1.0.7/jstz.min.js" ></script>
+
+
   <script>
+    jQuery( "#datetime_range" ).submit(function( event ) {
+        timezone = jstz.determine();
+        jQuery(".timezone").val(timezone.name());
+    });
+
     jQuery('#datetimepicker1').datetimepicker(
       {
         format:'Y-m-d H:i',
@@ -127,28 +158,42 @@
         defaultDate:'{{to_date}}'
       });
 
-      jQuery("#range_select input[type=radio]").click(function(){ 
+    jQuery("#range_select input[type=radio]").click(function(){
+        timezone = jstz.determine();
+        jQuery(".timezone").val(timezone.name());
+        jQuery(".sensor_id").val({{sensorid}});
         jQuery("#range_select").submit();
       });
-  </script>
-  <!-- Datetimepicker files end -->
 
-  <!-- Google Charts JS start -->
+    jQuery("#plotly").click(function(){
+      jQuery("#plotly_wait").text("Sending data...");
+      jQuery("#plotly_url").text("");
+      {% autoescape false %}
+      jQuery.get("/to_plotly?{{query_string}}")
+      {% endautoescape %}
+        .done(function( data ) {
+          jQuery("#plotly_url").attr("href",data);
+          jQuery("#plotly_url").text("Click to see your plot");
+          jQuery("#plotly_wait").text("");
+	  });
+	      return false; //This is so that the click on the link does not cause the page to refresh
+	});
+    </script>
+
   <script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1','packages':['corechart']}]}"></script>
 
-  <script>
-    google.load('visualization', '1', {packages: ['corechart']});
+      <script>
+       google.load('visualization', '1', {packages: ['corechart']});
     google.setOnLoadCallback(drawChart);
 
     function drawChart() {
 
       var data = new google.visualization.DataTable();
-      data.addColumn('datetime', 'Time');  
-      data.addColumn('number', 'Temperature');      
+      data.addColumn('datetime', 'Time');
+      data.addColumn('number', 'Temperature');
       data.addRows([
-          {% for row in temp %} 
-            [new Date({{row[0][0:4]}},{{row[0][5:7]}} - 1,{{row[0][8:10]}},{{row[0][11:13]}},{{row[0][14:16]}}),
-                {{'%0.2f'|format(row[2])}}],
+          {% for row in temp %}
+            [new Date({{row[0][0:4]}},{{row[0][5:7]}}-1,{{row[0][8:10]}},{{row[0][11:13]}},{{row[0][14:16]}}),{{'%0.2f'|format(row[1])}}],
           {% endfor %}
         ]);
 
@@ -171,20 +216,21 @@
       chart.draw(data, options);
 
     }
-  </script>
 
-  <script>
+      </script>
+
+<script>
     google.load('visualization', '1', {packages: ['corechart']});
     google.setOnLoadCallback(drawChart);
 
     function drawChart() {
 
       var data = new google.visualization.DataTable();
-      data.addColumn('datetime', 'Time');  
-      data.addColumn('number', 'Humidity');      
+      data.addColumn('datetime', 'Time');
+      data.addColumn('number', 'Humidity');
       data.addRows([
           {% for row in hum %}
-            [new Date({{row[0][0:4]}},{{row[0][5:7]}} - 1,{{row[0][8:10]}},{{row[0][11:13]}},{{row[0][14:16]}}),{{'%0.2f'|format(row[2])}}],
+            [new Date({{row[0][0:4]}},{{row[0][5:7]}}-1,{{row[0][8:10]}},{{row[0][11:13]}},{{row[0][14:16]}}),{{'%0.2f'|format(row[1])}}],
           {% endfor %}
         ]);
 
@@ -208,6 +254,5 @@
 
     }
 
-  </script>  
-  <!-- Google Charts JS end -->
+      </script>
 </html>

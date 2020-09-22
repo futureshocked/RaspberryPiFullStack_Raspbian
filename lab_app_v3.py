@@ -62,22 +62,22 @@ def lab_temp():
 	else:
 		return render_template("no_sensor.html")
 
-@app.route("/lab_env_db", methods=['GET']) 
+@app.route("/lab_env_db", methods=['GET'])
 def lab_env_db():
-        from_date_str 	= request.args.get('from',time.strftime("%Y-%m-%d %H:%M")) #Get the from date value from the URL
-        to_date_str 	= request.args.get('to',time.strftime("%Y-%m-%d %H:%M"))   #Get the to date value from the URL
-	
+        from_date_str   = request.args.get('from',time.strftime("%Y-%m-%d %H:%M")) #Get the from date value from the URL
+        to_date_str     = request.args.get('to',time.strftime("%Y-%m-%d %H:%M"))   #Get the to date value from the URL
+
         conn=sqlite3.connect('/var/www/lab_app/lab_app.db')
         curs=conn.cursor()
-	# curs.execute("SELECT * FROM temperatures")
-	# temperatures = curs.fetchall()
-	# curs.execute("SELECT * FROM humidities")
-	# humidities = curs.fetchall()
-	# conn.close()
+        # curs.execute("SELECT * FROM temperatures")
+        # temperatures = curs.fetchall()
+        # curs.execute("SELECT * FROM humidities")
+        # humidities = curs.fetchall()
+        # conn.close()
         curs.execute("SELECT * FROM temperatures WHERE rDateTime BETWEEN ? AND ?", (from_date_str, to_date_str))
-        temperatures 	= curs.fetchall()
+        temperatures    = curs.fetchall()
         curs.execute("SELECT * FROM humidities WHERE rDateTime BETWEEN ? AND ?", (from_date_str, to_date_str))
-        humidities 		= curs.fetchall()
+        humidities              = curs.fetchall()
         conn.close()
         return render_template("lab_env_db.html",temp=temperatures,hum=humidities)
 

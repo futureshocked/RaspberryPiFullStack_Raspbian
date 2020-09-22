@@ -77,12 +77,12 @@ def lab_env_db():
     time_adjusted_temperatures = []
     time_adjusted_humidities   = []
     for record in temperatures:
-        local_timedate = arrow.get(record[0], "YYYY-MM-DD HH:mm").to(timezone)
-        time_adjusted_temperatures.append([local_timedate.format('YYYY-MM-DD HH:mm'), round(record[2],2)])
+        local_timedate = arrow.get(record[0], "YYYY-MM-DD HH:mm:ss").to(timezone)
+        time_adjusted_temperatures.append([local_timedate.format('YYYY-MM-DD HH:mm:ss'), round(record[2],2)])
 
     for record in humidities:
-        local_timedate = arrow.get(record[0], "YYYY-MM-DD HH:mm").to(timezone)
-        time_adjusted_humidities.append([local_timedate.format('YYYY-MM-DD HH:mm'), round(record[2],2)])
+        local_timedate = arrow.get(record[0], "YYYY-MM-DD HH:mm:ss").to(timezone)
+        time_adjusted_humidities.append([local_timedate.format('YYYY-MM-DD HH:mm:ss'), round(record[2],2)])
 
     print ("rendering lab_env_db.html with: %s, %s, %s" % (timezone, from_date_str, to_date_str))
 
@@ -125,7 +125,7 @@ def get_records():
 
 	# If range_h is defined, we don't need the from and to times
 	if isinstance(range_h_int,int):
-		arrow_time_from = arrow.utcnow().replace(hours=-range_h_int)
+		arrow_time_from = arrow.utcnow().shift(hours=-range_h_int)
 		arrow_time_to   = arrow.utcnow()
 		from_date_utc   = arrow_time_from.strftime("%Y-%m-%d %H:%M")
 		to_date_utc     = arrow_time_to.strftime("%Y-%m-%d %H:%M")

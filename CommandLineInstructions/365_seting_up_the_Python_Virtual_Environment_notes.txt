@@ -45,7 +45,7 @@ $ cd /var/www/lab_app/
 
 Step 3
 ------
-$ /usr/local/opt/python-3.6.4/bin/python3.6 -m venv .
+$ /usr/local/opt/python-3.8.1/bin/python3.8 -m venv .
 
 Step 4
 ------

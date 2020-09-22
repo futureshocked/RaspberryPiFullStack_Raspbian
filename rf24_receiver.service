@@ -1,0 +1,24 @@
+# Start the rf24 listener script as a service at startup
+# Copy this file into /etc/systemd/system as root, for example:
+# sudo cp myscript.service /etc/systemd/system/rf24_receiver.service
+# Once this has been copied, you can attempt to start the service using the following command:
+# sudo systemctl start rf24_receiver.service
+# Stop it using following command:
+# sudo systemctl stop rf24_receiver.service
+# When you are happy that this starts and stops your app, you can have it start automatically on reboot by using this command:
+# sudo systemctl enable rf24_receiver.service
+
+[Unit]
+Description=RF24 Receiver Service
+After=syslog.target
+
+[Service]
+ExecStart=/var/www/lab_app/bin/python /var/www/lab_app/rf24_receiver.py
+WorkingDirectory=/var/www/lab_app/
+StandardOutput=inherit
+StandardError=inherit
+Restart=always
+User=root
+
+[Install]
+WantedBy=multi-user.target

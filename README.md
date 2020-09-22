@@ -2,7 +2,7 @@
 
 This repository contains the complete code from the course Raspberry Pi:Full Stack with Raspbian, from Tech Explorations.
 
-You can find more information at https://www.txplore.com/p/rpi-full-stack-raspbian
+You can find more information at https://app.techexplorations.com/courses/raspberry-pi-full-stack-raspbian/
 
 The objective of this course is to take you to a whirlwind tour of the Raspberry Pi, and introduce you to everything that is great about it.
 

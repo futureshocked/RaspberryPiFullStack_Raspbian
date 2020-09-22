@@ -1,13 +1,13 @@
 FILE NAME
-430_setup_nginx_and_flask_notes.txt
+500_install_dht_library_and_rpi-gpio_module_notes.txt
 
 1. WHAT IT DOES
 This file contains the command line instructions
-used in lectures 0430a and 0430b. You may copy these
+used in lecture 0500b. You may copy these
 instructions in your command line for convenience.
 
 This set of instructions will result in installing
-the Nginx web server and the Flask framework.
+the DHT library and the RPI-GPIO module.
 
 2. REQUIRES
 Any Raspberry Pi
@@ -40,45 +40,16 @@ Step 1
 ------
 $ cd /var/www/lab_app
 $ . bin/activate
-$ apt-get update
 
 Step 2
 ------
-$ apt-get upgrade
+$ pip install rpi.gpio
 
 Step 3
 ------
-$ apt-get install nginx
+$ git clone https://github.com/adafruit/Adafruit_Python_DHT.git
 
 Step 4
 ------
-$ pip install flask
-
-Step 5
-------
-$ apt-get install vim
-$ vim hello.py
-
-Step 6
-------
-In hello.py, copy and save this text:
-
-from flask import Flask
-app = Flask(__name__)
-@app.route("/")
-def hello():
-  return "Hello World!"
-
-if __name__ == "__main__":
-  app.run(host='0.0.0.0', port=8080)
-
-
-Step 7
-------
-$ python hello.py
-
-Step 8
-------
-Use the browser to confirm it is working:
-
-http://192.168.111.63:8080/
+$ cd Adafruit_Python_DHT/
+$ python setup.py install

@@ -53,36 +53,43 @@ $ sudo apt-get install libncurses5-dev libncursesw5-dev libreadline6-dev libffi-
 Step 5
 ------
 $ sudo apt-get install libbz2-dev libexpat1-dev liblzma-dev zlib1g-dev libsqlite3-dev libgdbm-dev tk8.5-dev libssl-dev openssl
+$ sudo apt-get install libboost-python-dev
+$ sudo apt-get install libpulse-dev
 
 Step 6
+------
+$ sudo apt-get install python-dev
+$ sudo apt-get install vim
+
+Step 7
 ------
 $ cd ~
 $ mkdir python-source
 $ cd python-source/
 
-Step 7
-------
-$ wget https://www.python.org/ftp/python/3.6.4/Python-3.6.4.tgz
-
 Step 8
 ------
-$ tar zxvf Python-3.6.4.tgz
+$ wget https://www.python.org/ftp/python/3.8.1/Python-3.8.1.tgz
 
 Step 9
 ------
-$ cd Python-3.6.4/
-$ ./configure --prefix=/usr/local/opt/python-3.6.4
+$ tar zxvf Python-3.8.1.tgz
 
 Step 10
--------
-$ make
+------
+$ cd Python-3.8.1/
+$ ./configure --prefix=/usr/local/opt/python-3.8.1
 
 Step 11
 -------
-$ sudo make install
+$ make
 
 Step 12
 -------
-$ /usr/local/opt/python-3.6.4/bin/python3.6 --version
+$ sudo make install
 
-(The response should be: Python 3.6.4)
+Step 13
+-------
+$ /usr/local/opt/python-3.8.1/bin/python3.8 --version
+
+(The response should be: Python 3.8.1)
