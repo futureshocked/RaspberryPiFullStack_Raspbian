@@ -52,9 +52,9 @@ GPIO.setup(inPin, GPIO.IN)  ## Set pin 8 to INPUT
  
 while True:                 ## Do this forever
     value = GPIO.input(inPin) ## Read input from switch
-    if value:                 ## If switch is released
-        print ("Not Pressed")
-    else:                     ## Else switch is pressed
+    if value:                 ## If switch is pressed
         print ("Pressed")
+    else:                     ## Else switch is released
+        print ("Not Pressed")
     time.sleep(0.1)           ## the delay is needed for the Raspberry Pi 3 because of its cpu speed
 GPIO.cleanup() 
