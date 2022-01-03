@@ -62,6 +62,8 @@ import subprocess
 
 app         = Flask(__name__)
 app.debug   = True # Make this False if you are no longer debugging
+dhtDevice = adafruit_dht.DHT22(board.D17) #This needs to be initialized outside of the route function in order to avoid a Gateway-Time-out 504 error.
+
 
 @app.route("/")
 def hello():
@@ -71,7 +73,7 @@ def hello():
 def lab_temp():
 	#import sys
 	#import Adafruit_DHT
-        dhtDevice = adafruit_dht.DHT22(board.D17)
+        
         temperature = dhtDevice.temperature
         humidity = dhtDevice.humidity
         #humidity, temperature = Adafruit_DHT.read_retry(Adafruit_DHT.AM2302, 17)
