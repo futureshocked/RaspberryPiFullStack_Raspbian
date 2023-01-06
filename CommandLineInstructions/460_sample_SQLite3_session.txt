@@ -45,7 +45,7 @@ $ cd /var/www/lab_app
 
 Step 3
 ------
-$ sqlite3 sample.sql
+$ sqlite3 sample.db
 
 In SQLite3 command line interface (Example SQLite3 session):
 
